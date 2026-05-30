@@ -1,0 +1,352 @@
+---
+// Projects.astro — Bento grid project layout with modal trigger
+import { projects } from "../data/projects";
+
+const featured = projects.filter((p) => p.featured);
+const rest = projects.filter((p) => !p.featured);
+---
+
+<section class="section projects-section" id="proyectos">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">02. proyectos</span>
+      <h2 class="display-md">Proyectos Destacados</h2>
+      <p class="projects-subtitle">
+        Soluciones reales a problemas de negocio reales.
+      </p>
+    </div>
+
+    <!-- Bento grid -->
+    <div class="bento-grid">
+      <!-- Featured (large) -->
+      {
+        featured.map((project, i) => (
+          <button
+            class={`project-card project-card--featured ${i % 2 === 1 ? "project-card--alt" : ""}`}
+            data-project-id={project.id}
+            aria-label={`Ver proyecto: ${project.title}`}
+            id={`project-card-${project.id}`}
+          >
+            <div class="card-bg" aria-hidden="true">
+              <div class="card-circuit" />
+            </div>
+            <div class="card-body">
+              <div class="card-top">
+                <span class="card-year mono-sm">{project.year}</span>
+                <div class="card-stack-icons">
+                  {project.stackLabels.slice(0, 3).map((label) => (
+                    <span class="stack-chip">{label}</span>
+                  ))}
+                </div>
+              </div>
+              <div class="card-main">
+                <h3 class="card-title">{project.title}</h3>
+                <p class="card-tagline">{project.tagline}</p>
+              </div>
+              <div class="card-footer">
+                <span class="card-cta">
+                  Ver detalles
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <path d="M7 17L17 7M17 7H7M17 7v10" />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </button>
+        ))
+      }
+
+      <!-- Rest (small) -->
+      {
+        rest.map((project) => (
+          <button
+            class="project-card project-card--small"
+            data-project-id={project.id}
+            aria-label={`Ver proyecto: ${project.title}`}
+            id={`project-card-${project.id}`}
+          >
+            <div class="card-body">
+              <div class="card-top">
+                <span class="card-year mono-sm">{project.year}</span>
+              </div>
+              <div class="card-main">
+                <h3 class="card-title">{project.title}</h3>
+                <p class="card-tagline card-tagline--sm">{project.tagline}</p>
+              </div>
+              <div class="card-stack-row">
+                {project.stackLabels.map((label) => (
+                  <span class="stack-chip stack-chip--xs">{label}</span>
+                ))}
+              </div>
+              <div class="card-footer">
+                <span class="card-cta card-cta--sm">Ver detalles →</span>
+              </div>
+            </div>
+          </button>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .projects-subtitle {
+    color: var(--ink-secondary);
+    font-size: 0.9375rem;
+    margin-top: var(--space-2);
+  }
+
+  .bento-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto;
+    gap: var(--space-4);
+    margin-top: var(--space-10);
+  }
+
+  /* Featured cards span 1.5 columns */
+  .project-card--featured:nth-child(1) {
+    grid-column: span 2;
+  }
+  .project-card--featured:nth-child(2) {
+    grid-column: span 1;
+  }
+
+  /* Small cards */
+  .project-card--small {
+    grid-column: span 1;
+  }
+
+  /* Base card */
+  .project-card {
+    position: relative;
+    background: var(--surface-1);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--r-xl);
+    overflow: hidden;
+    cursor: pointer;
+    text-align: left;
+    transition:
+      border-color var(--t-mid) var(--ease-out),
+      transform var(--t-mid) var(--ease-out),
+      box-shadow var(--t-mid) var(--ease-out);
+    animation: fadeUp 0.6s var(--ease-out) both;
+  }
+
+  .project-card:nth-child(1) {
+    animation-delay: 0.05s;
+  }
+  .project-card:nth-child(2) {
+    animation-delay: 0.1s;
+  }
+  .project-card:nth-child(3) {
+    animation-delay: 0.15s;
+  }
+  .project-card:nth-child(4) {
+    animation-delay: 0.2s;
+  }
+  .project-card:nth-child(5) {
+    animation-delay: 0.25s;
+  }
+
+  .project-card:hover {
+    border-color: var(--border-standard);
+    transform: translateY(-3px);
+    box-shadow:
+      0 16px 48px rgba(0, 0, 0, 0.35),
+      0 0 24px var(--cyan-glow);
+  }
+
+  .project-card:hover .card-cta {
+    color: var(--cyan);
+  }
+
+  /* Gold brand accent for the alternate project card */
+  .project-card--alt {
+    border-color: var(--border-gold);
+  }
+
+  .project-card--alt:hover {
+    border-color: var(--gold);
+    box-shadow:
+      0 16px 48px rgba(0, 0, 0, 0.35),
+      0 0 24px rgba(201, 169, 110, 0.2);
+  }
+
+  .project-card--alt .stack-chip {
+    color: var(--gold);
+    background: var(--gold-dim);
+    border-color: rgba(201, 169, 110, 0.2);
+  }
+
+  .project-card--alt:hover .card-cta {
+    color: var(--gold);
+  }
+
+  .project-card--alt .card-circuit {
+    background-image:
+      linear-gradient(90deg, rgba(201, 169, 110, 0.04) 1px, transparent 1px),
+      linear-gradient(180deg, rgba(201, 169, 110, 0.04) 1px, transparent 1px);
+  }
+
+  /* Decorative bg pattern for featured */
+  .card-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .card-circuit {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(90deg, var(--border-ghost) 1px, transparent 1px),
+      linear-gradient(180deg, var(--border-ghost) 1px, transparent 1px);
+    background-size: 24px 24px;
+    opacity: 0;
+    transition: opacity var(--t-slow);
+  }
+
+  .project-card:hover .card-circuit {
+    opacity: 1;
+  }
+
+  /* Card body */
+  .card-body {
+    position: relative;
+    padding: var(--space-6);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .project-card--featured .card-body {
+    min-height: 240px;
+    padding: var(--space-8);
+  }
+
+  .card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+
+  .card-year {
+    color: var(--ink-muted);
+    letter-spacing: 0.06em;
+  }
+
+  .card-stack-icons {
+    display: flex;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .stack-chip {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    color: var(--cyan);
+    background: var(--cyan-dim);
+    border: 1px solid var(--border-subtle);
+    border-radius: 999px;
+    padding: 2px 8px;
+    white-space: nowrap;
+    text-transform: uppercase;
+  }
+
+  .stack-chip--xs {
+    font-size: 0.5875rem;
+  }
+
+  .card-main {
+    flex: 1;
+  }
+
+  .card-title {
+    font-family: var(--font-display);
+    font-size: 1.1875rem;
+    font-weight: 700;
+    color: var(--ink-primary);
+    line-height: 1.25;
+    margin-bottom: var(--space-2);
+  }
+
+  .project-card--featured .card-title {
+    font-size: 1.4375rem;
+  }
+
+  .card-tagline {
+    font-size: 0.875rem;
+    color: var(--ink-secondary);
+    line-height: 1.55;
+  }
+
+  .card-tagline--sm {
+    font-size: 0.8125rem;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .card-stack-row {
+    display: flex;
+    gap: var(--space-1);
+    flex-wrap: wrap;
+    margin-top: auto;
+  }
+
+  .card-footer {
+    margin-top: var(--space-2);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--border-ghost);
+  }
+
+  .card-cta {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--ink-tertiary);
+    letter-spacing: 0.04em;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    transition: color var(--t-fast);
+  }
+
+  .card-cta--sm {
+    font-size: 0.6875rem;
+  }
+
+  @media (max-width: 900px) {
+    .bento-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .project-card--featured:nth-child(1),
+    .project-card--featured:nth-child(2) {
+      grid-column: span 2;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .bento-grid {
+      grid-template-columns: 1fr;
+    }
+    .project-card--featured:nth-child(1),
+    .project-card--featured:nth-child(2),
+    .project-card--small {
+      grid-column: span 1;
+    }
+  }
+</style>

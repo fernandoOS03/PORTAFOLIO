@@ -1,0 +1,205 @@
+---
+// 404.astro — Premium terminal-style Page Not Found
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout
+  title="404 — Page Not Found"
+  description="La página que buscas no existe o ha sido movida. Código de estado: 404."
+>
+  <Nav />
+
+  <main class="err-container">
+    <div class="err-terminal" role="alert" aria-live="assertive">
+      <div class="terminal-chrome" aria-hidden="true">
+        <span class="dot dot-red"></span>
+        <span class="dot dot-yellow"></span>
+        <span class="dot dot-green"></span>
+        <span class="terminal-title">~/error-handler — bash</span>
+      </div>
+
+      <div class="terminal-body">
+        <div class="terminal-line">
+          <span class="t-prompt">fernandoolivera</span>
+          <span class="t-at">@</span>
+          <span class="t-host">dev</span>
+          <span class="t-sep">:~$</span>
+          <span class="t-cmd"> curl -i /lost-in-space</span>
+        </div>
+
+        <div class="terminal-response">
+          <p class="err-header">HTTP/1.1 <span class="err-code">404 Not Found</span></p>
+          <p class="err-meta">Date: {new Date().toUTCString()}</p>
+          <p class="err-meta">Server: Midnight-Navy/2.0.0</p>
+          <p class="err-meta">Content-Type: text/plain; charset=UTF-8</p>
+          
+          <div class="err-body">
+            <p class="t-comment"># ERROR_CODE: RESOURCE_NOT_FOUND</p>
+            <p class="err-text">La ruta que intentas acceder no está mapeada en esta arquitectura.</p>
+            <p class="err-suggest">Verifica la URL o regresa al directorio raíz para continuar explorando el portafolio.</p>
+          </div>
+        </div>
+
+        <div class="terminal-line mt-4">
+          <span class="t-prompt">fernandoolivera</span>
+          <span class="t-at">@</span>
+          <span class="t-host">dev</span>
+          <span class="t-sep">:~$</span>
+          <span class="t-cmd"> cd ~</span>
+          <span class="t-cursor" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="err-actions">
+      <a href="/" class="btn btn-primary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          <polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+        Volver al Inicio (cd ~)
+      </a>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .err-container {
+    min-height: calc(100vh - 68px - 80px); /* accounts for Nav and Footer */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-20) var(--space-6) var(--space-12);
+    position: relative;
+    z-index: 1;
+  }
+
+  .err-terminal {
+    width: 100%;
+    max-width: 640px;
+    background: var(--surface-1);
+    border: 1px solid var(--border-emphasis);
+    border-radius: var(--r-xl);
+    overflow: hidden;
+    box-shadow: 
+      0 24px 64px rgba(0, 0, 0, 0.5),
+      0 0 32px rgba(100, 255, 218, 0.05);
+    animation: fadeUp 0.6s var(--ease-out) both;
+  }
+
+  .terminal-chrome {
+    background: var(--surface-2);
+    padding: 12px var(--space-4);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  .dot-red { background: #ff5f57; }
+  .dot-yellow { background: #febc2e; }
+  .dot-green { background: #28c840; }
+
+  .terminal-title {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--ink-tertiary);
+    margin-left: auto;
+    letter-spacing: 0.04em;
+  }
+
+  .terminal-body {
+    padding: var(--space-5) var(--space-6);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+  }
+
+  .terminal-line {
+    line-height: 1.6;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .mt-4 {
+    margin-top: var(--space-4);
+  }
+
+  .t-prompt { color: var(--cyan); }
+  .t-at { color: var(--ink-tertiary); }
+  .t-host { color: var(--gold); }
+  .t-sep { color: var(--ink-secondary); }
+  .t-cmd { color: var(--ink-primary); }
+
+  .t-cursor {
+    display: inline-block;
+    width: 8px;
+    height: 14px;
+    background: var(--cyan);
+    margin-left: 2px;
+    vertical-align: text-bottom;
+    animation: blink 1s step-end infinite;
+  }
+
+  .terminal-response {
+    margin-top: var(--space-4);
+    margin-bottom: var(--space-4);
+    padding-left: var(--space-4);
+    border-left: 2px solid var(--border-standard);
+    color: var(--ink-secondary);
+    line-height: 1.6;
+  }
+
+  .err-header {
+    color: var(--ink-primary);
+    font-weight: 700;
+    margin-bottom: var(--space-2);
+  }
+
+  .err-code {
+    color: #ff5f57;
+  }
+
+  .err-meta {
+    font-size: 0.75rem;
+    color: var(--ink-tertiary);
+  }
+
+  .err-body {
+    margin-top: var(--space-3);
+    padding: var(--space-3);
+    background: rgba(255, 95, 87, 0.03);
+    border: 1px dashed rgba(255, 95, 87, 0.15);
+    border-radius: var(--r-md);
+  }
+
+  .t-comment {
+    color: var(--ink-tertiary);
+    font-size: 0.75rem;
+    margin-bottom: var(--space-2);
+  }
+
+  .err-text {
+    color: var(--ink-primary);
+    margin-bottom: var(--space-2);
+  }
+
+  .err-suggest {
+    font-size: 0.75rem;
+    color: var(--ink-secondary);
+  }
+
+  .err-actions {
+    margin-top: var(--space-6);
+    animation: fadeUp 0.6s var(--ease-out) 0.15s both;
+  }
+</style>

@@ -1,0 +1,994 @@
+---
+// ProjectModal.astro — Native <dialog> modal for project details
+import { projects } from '../data/projects';
+---
+
+{projects.map(project => (
+  <dialog
+    class="project-modal"
+    id={`modal-${project.id}`}
+    aria-label={`Detalles del proyecto: ${project.title}`}
+  >
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-panel" role="document">
+      <div class="modal-header">
+        <div class="modal-header-left">
+          <span class="label">Proyecto</span>
+          <h2 class="modal-title">{project.title}</h2>
+        </div>
+        <div class="modal-header-right">
+          <span class="modal-year">{project.year}</span>
+          <button class="modal-close" data-close aria-label="Cerrar modal">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-left">
+          <div class="modal-section">
+            <h3 class="modal-section-title">El Problema</h3>
+            <p class="modal-text">{project.problem}</p>
+          </div>
+
+          <div class="modal-section">
+            <h3 class="modal-section-title">La Solución</h3>
+            <p class="modal-text">{project.solution}</p>
+          </div>
+
+          <div class="modal-section">
+            <h3 class="modal-section-title">Stack Técnico</h3>
+            <div class="modal-stack">
+              {project.stackLabels.map(label => (
+                <span class="badge badge-pro">{label}</span>
+              ))}
+            </div>
+          </div>
+
+          {project.github && (
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-ghost modal-github"
+              id={`btn-github-${project.id}`}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.929.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+              </svg>
+              Ver en GitHub
+            </a>
+          )}
+        </div>
+
+        <div class="modal-right">
+          <!-- Project Cover Teaser -->
+          {project.images && project.images.length > 0 ? (
+            <div class="project-cover">
+              <img
+                src={project.images[0]}
+                alt={`Teaser de ${project.title}`}
+                loading="lazy"
+                onerror="
+                  const fallbacks = [
+                    'https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&w=800&q=80'
+                  ];
+                  this.src = fallbacks[0];
+                  this.onerror = null;
+                "
+              />
+              <div class="cover-glow"></div>
+            </div>
+          ) : (
+            <div class="project-cover cover-abstract">
+              <div class="abstract-pattern"></div>
+              <div class="abstract-brand">
+                <span class="brand-sub">Fernando Olivera</span>
+                <span class="brand-main">{project.title}</span>
+                <span class="brand-tag">{project.tagline}</span>
+              </div>
+              <div class="cover-glow"></div>
+            </div>
+          )}
+
+          <!-- Visualize Actions Area -->
+          <div class="visualize-area">
+            <span class="visualize-title">Visualizar Proyecto</span>
+            <div class={`visualize-buttons ${(project.youtubeId && project.images && project.images.length > 0) ? 'has-both' : ''}`}>
+              {project.youtubeId && (
+                <button
+                  type="button"
+                  class="btn-visualize btn-visualize-video btn-video-trigger"
+                  aria-label="Ver demo en video en pantalla grande"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                  Ver Demo en Video
+                </button>
+              )}
+
+              {project.images && project.images.length > 0 && (
+                <button
+                  type="button"
+                  class="btn-visualize btn-visualize-gallery btn-gallery-trigger"
+                  data-images={JSON.stringify(project.images)}
+                  aria-label="Ver capturas de pantalla en pantalla grande"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                    <polyline points="21 15 16 10 5 21"/>
+                  </svg>
+                  Ver Capturas
+                </button>
+              )}
+            </div>
+          </div>
+
+          <div class="modal-description">
+            <h3 class="modal-section-title">Acerca del Proyecto</h3>
+            <p>{project.description}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Large Video Theater Overlay (renders as absolute overlay inside dialog to display the video in high-res format) -->
+    <div class="video-overlay" aria-hidden="true" role="dialog" aria-label="Demo del proyecto en pantalla grande">
+      <button class="lightbox-close" data-video-close aria-label="Cerrar reproductor">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+      
+      <div class="video-overlay-content">
+        {project.youtubeId ? (
+          <iframe
+            src=""
+            data-src={`https://www.youtube.com/embed/${project.youtubeId}?autoplay=1`}
+            title={`Demo en Video: ${project.title}`}
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        ) : (
+          <div class="video-placeholder" aria-label="Demo no disponible">
+            <div class="vp-inner">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
+                <polygon points="5 3 19 12 5 21 5 3"/>
+              </svg>
+              <span>Demo próximamente</span>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+
+    <!-- Large Gallery Lightbox Overlay (renders as absolute overlay inside dialog for large-scale image-by-image browsing) -->
+    <div class="lightbox-overlay" aria-hidden="true" role="dialog" aria-label="Galería de imágenes ampliada">
+      <button class="lightbox-close" data-lightbox-close aria-label="Cerrar galería">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+      
+      <button class="lightbox-nav lightbox-prev" data-lightbox-prev aria-label="Imagen anterior">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+      
+      <button class="lightbox-nav lightbox-next" data-lightbox-next aria-label="Imagen siguiente">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </button>
+
+      <div class="lightbox-content">
+        <img src="" alt="Captura de pantalla ampliada" class="lightbox-img" />
+        <div class="lightbox-counter">1 de 3</div>
+      </div>
+    </div>
+  </dialog>
+))}
+
+<style>
+  .project-modal {
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    width: min(92vw, 980px);
+    height: min(90vh, 700px);
+    background: var(--surface-1);
+    border: 1px solid var(--border-standard);
+    border-radius: var(--r-2xl);
+    padding: 0;
+    overflow: hidden;
+    z-index: 200;
+    box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px var(--border-subtle);
+  }
+
+  .project-modal::backdrop {
+    background: rgba(5, 12, 24, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .project-modal[open] {
+    animation: modalIn 0.3s var(--ease-out) both;
+  }
+
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.96) translateY(16px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .modal-panel {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: var(--space-5) var(--space-6);
+    border-bottom: 1px solid var(--border-subtle);
+    background: var(--surface-2);
+    flex-shrink: 0;
+  }
+
+  .modal-header-left {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .modal-title {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--ink-primary);
+    line-height: 1.2;
+  }
+
+  .modal-header-right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    flex-shrink: 0;
+  }
+
+  .modal-year {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--ink-muted);
+    letter-spacing: 0.08em;
+  }
+
+  .modal-close {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--r-sm);
+    color: var(--ink-secondary);
+    transition: color var(--t-fast), background var(--t-fast);
+  }
+
+  .modal-close:hover {
+    color: var(--ink-primary);
+    background: var(--surface-3);
+  }
+
+  .modal-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .modal-left {
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    border-right: 1px solid var(--border-subtle);
+    overflow-y: auto;
+    height: 100%;
+  }
+
+  .modal-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .modal-section-title {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--cyan);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .modal-text {
+    font-size: 0.875rem;
+    color: var(--ink-secondary);
+    line-height: 1.7;
+  }
+
+  .modal-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .modal-github {
+    margin-top: auto;
+    align-self: flex-start;
+    font-size: 0.75rem;
+  }
+
+  .modal-right {
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    overflow-y: auto;
+    height: 100%;
+  }
+
+  /* Project Cover */
+  .project-cover {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background: var(--surface-2);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .project-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .cover-glow {
+    position: absolute;
+    inset: 0;
+    box-shadow: inset 0 0 24px rgba(100, 255, 218, 0.05);
+    pointer-events: none;
+  }
+
+  .cover-abstract {
+    background: radial-gradient(circle at top left, var(--surface-3) 0%, var(--surface-1) 100%);
+    border-color: var(--border-standard);
+  }
+
+  .abstract-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.08;
+    background-image: radial-gradient(var(--cyan) 1px, transparent 1px);
+    background-size: 16px 16px;
+  }
+
+  .abstract-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-2);
+    padding: var(--space-6);
+    z-index: 5;
+  }
+
+  .brand-sub {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    color: var(--cyan);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .brand-main {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--ink-primary);
+    line-height: 1.2;
+    text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  }
+
+  .brand-tag {
+    font-size: 0.75rem;
+    color: var(--ink-muted);
+    max-width: 280px;
+    line-height: 1.4;
+  }
+
+  /* Visualize Action Area */
+  .visualize-area {
+    background: var(--surface-2);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--r-xl);
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3.5);
+    flex-shrink: 0;
+  }
+
+  .visualize-title {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--ink-secondary);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-left: 2px solid var(--cyan);
+    padding-left: var(--space-2);
+  }
+
+  .visualize-buttons {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+
+  @media (min-width: 600px) {
+    .visualize-buttons.has-both {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .btn-visualize {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2.5);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--r-lg);
+    font-family: var(--font-display);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--t-fast) var(--ease-out);
+    border: 1px solid transparent;
+  }
+
+  .btn-visualize-video {
+    background: rgba(255, 77, 77, 0.08);
+    border-color: rgba(255, 77, 77, 0.2);
+    color: #ff4d4d;
+  }
+
+  .btn-visualize-video:hover {
+    background: rgba(255, 77, 77, 0.14);
+    border-color: #ff4d4d;
+    box-shadow: 0 0 16px rgba(255, 77, 77, 0.25);
+    transform: translateY(-2px);
+  }
+
+  .btn-visualize-gallery {
+    background: rgba(100, 255, 218, 0.06);
+    border-color: rgba(100, 255, 218, 0.18);
+    color: var(--cyan);
+  }
+
+  .btn-visualize-gallery:hover {
+    background: rgba(100, 255, 218, 0.12);
+    border-color: var(--cyan);
+    box-shadow: 0 0 16px rgba(100, 255, 218, 0.25);
+    transform: translateY(-2px);
+  }
+
+  .video-placeholder {
+    aspect-ratio: 16 / 9;
+    background: var(--surface-2);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--r-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  .vp-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+    color: var(--ink-muted);
+  }
+
+  .vp-inner span {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+  }
+
+  .modal-description {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .modal-description p {
+    font-size: 0.875rem;
+    color: var(--ink-secondary);
+    line-height: 1.7;
+  }
+
+  .modal-backdrop {
+    display: none;
+  }
+
+  /* Large Video Overlay */
+  .video-overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    z-index: 300;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    opacity: 0;
+    transition: opacity 0.25s var(--ease-out);
+    border-radius: var(--r-2xl);
+    overflow: hidden;
+  }
+
+  .video-overlay.open {
+    display: flex;
+    opacity: 1;
+  }
+
+  .video-overlay-content {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    transform: scale(1);
+    transition: transform 0.25s var(--ease-out);
+  }
+
+  .video-overlay.open .video-overlay-content {
+    transform: scale(1);
+  }
+
+  .video-overlay-content iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  /* Lightbox Absolute Overlay inside Dialog */
+  .lightbox-overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: #050c18;
+    z-index: 300;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    opacity: 0;
+    transition: opacity 0.25s var(--ease-out);
+    border-radius: var(--r-2xl);
+    overflow: hidden;
+  }
+
+  .lightbox-overlay.open {
+    display: flex;
+    opacity: 1;
+  }
+
+  /* Dynamically strip modal border when overlays are open to be completely frameless */
+  .project-modal:has(.video-overlay.open),
+  .project-modal:has(.lightbox-overlay.open) {
+    border: none;
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: var(--space-4);
+    right: var(--space-4);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: rgba(255, 255, 255, 0.7);
+    background: rgba(5, 12, 24, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    transition: all var(--t-fast) var(--ease-out);
+    cursor: pointer;
+    z-index: 320;
+  }
+
+  .lightbox-close:hover {
+    color: var(--cyan);
+    background: rgba(5, 12, 24, 0.8);
+    border-color: var(--cyan);
+    transform: scale(1.08);
+  }
+
+  /* Lightbox Navigation Buttons overlapping multimedia */
+  .lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: rgba(255, 255, 255, 0.7);
+    background: rgba(5, 12, 24, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    transition: all var(--t-fast) var(--ease-out);
+    cursor: pointer;
+    z-index: 310;
+  }
+
+  .lightbox-nav:hover {
+    color: var(--cyan);
+    background: rgba(5, 12, 24, 0.7);
+    border-color: var(--cyan);
+    transform: translateY(-50%) scale(1.08);
+  }
+
+  .lightbox-prev {
+    left: var(--space-4);
+  }
+
+  .lightbox-next {
+    right: var(--space-4);
+  }
+
+  .lightbox-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    transform: scale(1);
+    transition: transform 0.25s var(--ease-out);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox-overlay.open .lightbox-content {
+    transform: scale(1);
+  }
+
+  .lightbox-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  /* Lightbox Counter overlapping multimedia */
+  .lightbox-counter {
+    position: absolute;
+    bottom: var(--space-4);
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(5, 12, 24, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--r-full);
+    color: rgba(255, 255, 255, 0.9);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.05em;
+    pointer-events: none;
+    z-index: 310;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  }
+
+  @media (max-width: 700px) {
+    .project-modal {
+      width: 100vw;
+      height: 95vh;
+      max-height: 95vh;
+      border-radius: var(--r-xl) var(--r-xl) 0 0;
+      position: fixed;
+      bottom: 0;
+      top: auto;
+      left: 0;
+      right: 0;
+      margin: 0;
+    }
+    .modal-body {
+      grid-template-columns: 1fr;
+      overflow-y: auto;
+      height: calc(100% - 76px);
+    }
+    .modal-left {
+      border-right: none;
+      border-bottom: 1px solid var(--border-subtle);
+      height: auto;
+      overflow: visible;
+    }
+    .modal-right {
+      height: auto;
+      overflow: visible;
+    }
+    .lightbox-close {
+      top: var(--space-3);
+      right: var(--space-3);
+    }
+    .lightbox-nav {
+      width: 36px;
+      height: 36px;
+    }
+    .lightbox-prev {
+      left: var(--space-3);
+    }
+    .lightbox-next {
+      right: var(--space-3);
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll('[data-project-id]').forEach(card => {
+    card.addEventListener('click', () => {
+      const id = card.getAttribute('data-project-id');
+      const modal = document.getElementById(`modal-${id}`);
+      if (modal && typeof (modal as any).showModal === 'function') {
+        (modal as any).showModal();
+        document.body.style.overflow = 'hidden';
+      }
+    });
+  });
+
+  document.querySelectorAll('.project-modal').forEach(modal => {
+    modal.querySelectorAll('[data-close]').forEach(el => {
+      el.addEventListener('click', () => closeModal(modal as HTMLDialogElement));
+    });
+
+    modal.addEventListener('click', (e) => {
+      const rect = modal.getBoundingClientRect();
+      const outside =
+        e.clientX < rect.left || e.clientX > rect.right ||
+        e.clientY < rect.top  || e.clientY > rect.bottom;
+      if (outside) closeModal(modal as HTMLDialogElement);
+    });
+
+    modal.addEventListener('cancel', (e) => {
+      e.preventDefault();
+      closeModal(modal as HTMLDialogElement);
+    });
+
+    // --- Video Overlay Logic ---
+    const videoOverlay = modal.querySelector('.video-overlay');
+    const videoTrigger = modal.querySelector('.btn-video-trigger');
+    const videoClose = modal.querySelector('[data-video-close]');
+    
+    if (videoOverlay && videoTrigger) {
+      const iframe = videoOverlay.querySelector('iframe');
+      
+      videoTrigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (iframe) {
+          const autoplaySrc = iframe.getAttribute('data-src') || '';
+          iframe.setAttribute('src', autoplaySrc);
+        }
+        videoOverlay.classList.add('open');
+        videoOverlay.setAttribute('aria-hidden', 'false');
+      });
+
+      const closeVideo = () => {
+        videoOverlay.classList.remove('open');
+        videoOverlay.setAttribute('aria-hidden', 'true');
+        if (iframe) iframe.setAttribute('src', '');
+      };
+
+      if (videoClose) {
+        videoClose.addEventListener('click', (e) => {
+          e.stopPropagation();
+          closeVideo();
+        });
+      }
+
+      videoOverlay.addEventListener('click', (e) => {
+        if (e.target === videoOverlay || e.target === videoOverlay.querySelector('.video-overlay-content')) {
+          e.stopPropagation();
+          closeVideo();
+        }
+      });
+    }
+
+    // --- Gallery Lightbox Overlay Logic (with cycling navigation) ---
+    const lightbox = modal.querySelector('.lightbox-overlay');
+    const galleryTrigger = modal.querySelector('.btn-gallery-trigger');
+    
+    if (lightbox && galleryTrigger) {
+      const lightboxImg = lightbox.querySelector('.lightbox-img') as HTMLImageElement | null;
+      const lightboxCounter = lightbox.querySelector('.lightbox-counter') as HTMLDivElement | null;
+      const lightboxClose = lightbox.querySelector('[data-lightbox-close]');
+      const lightboxPrev = lightbox.querySelector('[data-lightbox-prev]') as HTMLButtonElement | null;
+      const lightboxNext = lightbox.querySelector('[data-lightbox-next]') as HTMLButtonElement | null;
+
+      // In this version, screenshots are stored in the Project component, but we can query them dynamically
+      // Let's get the project id from the modal
+      const projectId = modal.id.replace('modal-', '');
+      // We will parse the images array injected dynamically or read it from hidden metadata.
+      // Alternatively, we can just extract from the dataset or pass via astro templates.
+      // But we can also look at what project details are rendered. Wait! Let's get the list of image sources
+      // directly since we know them, or we can look up the image data.
+      // Let's get them from a hidden element or read dynamically!
+      // Wait, is there a simple way to pass the images array? Yes! We can store them in a data-images attribute on the trigger button!
+      // Let's do that! Wait, does the button have it? We can add it to the button!
+      // Let's read it:
+      let images: string[] = [];
+      
+      // Let's get them from the data-images attribute we will set on the trigger button
+      const imgData = galleryTrigger.getAttribute('data-images');
+      if (imgData) {
+        try {
+          images = JSON.parse(imgData);
+        } catch(e) {
+          images = [];
+        }
+      }
+
+      let currentImgIndex = 0;
+
+      const updateLightboxImage = () => {
+        if (lightboxImg && images[currentImgIndex]) {
+          lightboxImg.src = images[currentImgIndex];
+          if (lightboxCounter) {
+            lightboxCounter.textContent = `${currentImgIndex + 1} de ${images.length}`;
+          }
+        }
+      };
+
+      galleryTrigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (images.length > 0) {
+          currentImgIndex = 0;
+          updateLightboxImage();
+
+          // Toggle navigation button visibility based on image count
+          if (images.length <= 1) {
+            if (lightboxPrev) lightboxPrev.style.display = 'none';
+            if (lightboxNext) lightboxNext.style.display = 'none';
+            if (lightboxCounter) lightboxCounter.style.display = 'none';
+          } else {
+            if (lightboxPrev) lightboxPrev.style.display = 'flex';
+            if (lightboxNext) lightboxNext.style.display = 'flex';
+            if (lightboxCounter) lightboxCounter.style.display = 'block';
+          }
+
+          lightbox.classList.add('open');
+          lightbox.setAttribute('aria-hidden', 'false');
+        }
+      });
+
+      // Cycle controls
+      const handleNext = () => {
+        if (images.length > 1) {
+          currentImgIndex = (currentImgIndex + 1) % images.length;
+          updateLightboxImage();
+        }
+      };
+
+      const handlePrev = () => {
+        if (images.length > 1) {
+          currentImgIndex = (currentImgIndex - 1 + images.length) % images.length;
+          updateLightboxImage();
+        }
+      };
+
+      if (lightboxNext) {
+        lightboxNext.addEventListener('click', (e) => {
+          e.stopPropagation();
+          handleNext();
+        });
+      }
+
+      if (lightboxPrev) {
+        lightboxPrev.addEventListener('click', (e) => {
+          e.stopPropagation();
+          handlePrev();
+        });
+      }
+
+      // Close local lightbox
+      const closeLocalLightbox = () => {
+        lightbox.classList.remove('open');
+        lightbox.setAttribute('aria-hidden', 'true');
+        setTimeout(() => {
+          if (lightboxImg) lightboxImg.src = '';
+        }, 250);
+      };
+
+      if (lightboxClose) {
+        lightboxClose.addEventListener('click', (e) => {
+          e.stopPropagation();
+          closeLocalLightbox();
+        });
+      }
+
+      lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox || e.target === lightbox.querySelector('.lightbox-content')) {
+          e.stopPropagation();
+          closeLocalLightbox();
+        }
+      });
+
+      // Escape key to close lightbox first, Arrow Left/Right to cycle
+      window.addEventListener('keydown', (e) => {
+        if (lightbox.classList.contains('open')) {
+          if (e.key === 'Escape') {
+            e.stopPropagation();
+            e.preventDefault();
+            closeLocalLightbox();
+          } else if (e.key === 'ArrowRight') {
+            e.stopPropagation();
+            handleNext();
+          } else if (e.key === 'ArrowLeft') {
+            e.stopPropagation();
+            handlePrev();
+          }
+        }
+      });
+    }
+  });
+
+  function closeModal(modal: HTMLDialogElement) {
+    // Stop playing YouTube video in background by resetting the iframe source in both standard place and video overlay
+    const videoOverlay = modal.querySelector('.video-overlay');
+    if (videoOverlay) {
+      videoOverlay.classList.remove('open');
+      videoOverlay.setAttribute('aria-hidden', 'true');
+      const iframe = videoOverlay.querySelector('iframe');
+      if (iframe) iframe.setAttribute('src', '');
+    }
+
+    const lightbox = modal.querySelector('.lightbox-overlay');
+    if (lightbox) {
+      lightbox.classList.remove('open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      const lightboxImg = lightbox.querySelector('.lightbox-img') as HTMLImageElement | null;
+      if (lightboxImg) lightboxImg.src = '';
+    }
+
+    modal.close();
+    document.body.style.overflow = '';
+  }
+</script>

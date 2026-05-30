@@ -1,0 +1,244 @@
+---
+// Stack.astro — Minimalist Tech Stack Section
+import { stack } from '../data/stack';
+import { Image } from 'astro:assets';
+---
+
+<section class="section stack-section" id="stack">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">03. toolbox</span>
+      <h2 class="display-md">Stack Tecnológico</h2>
+      <p class="stack-subtitle">Herramientas con las que construyo, automatizo y escalo.</p>
+    </div>
+
+    <div class="stack-grid">
+      {stack.map((category, catIdx) => (
+        <div class="stack-category" style={`animation-delay: ${catIdx * 0.1}s`}>
+          <div class="category-header">
+            <span class="category-index">{String(catIdx + 1).padStart(2, '0')}</span>
+            <h3 class="category-name">{category.name}</h3>
+          </div>
+          
+          <div class="category-body">
+            <div class="tech-chips-grid">
+              {category.items.map((tech) => (
+                <div class={`tech-chip tech-chip--${tech.level}`}>
+                  <div class="tech-icon-wrapper">
+                    <Image
+                      src={`https://api.iconify.design/${tech.icon.replace(':', '/')}.svg?color=${tech.level === 'pro' ? '%2364FFDA' : '%23C9A96E'}`}
+                      alt=""
+                      width={16}
+                      height={16}
+                      class="tech-icon"
+                      loading="lazy"
+                      aria-hidden="true"
+                    />
+                  </div>
+                  <span class="tech-name">{tech.name}</span>
+                  <span class={`tech-level tech-level--${tech.level}`}>{tech.level === 'pro' ? 'Pro' : 'Dev'}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Legend -->
+    <div class="stack-legend">
+      <div class="legend-item">
+        <span class="badge badge-pro">Pro</span>
+        <span class="legend-label">Experiencia Profesional</span>
+      </div>
+      <div class="legend-item">
+        <span class="badge badge-dev">Dev</span>
+        <span class="legend-label">En Desarrollo</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .stack-subtitle {
+    color: var(--ink-secondary);
+    font-size: 0.9375rem;
+    margin-top: var(--space-2);
+  }
+
+  .stack-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-4);
+    margin-top: var(--space-10);
+  }
+
+  .stack-category {
+    background: var(--surface-1);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--r-xl);
+    overflow: hidden;
+    animation: fadeUp 0.6s var(--ease-out) both;
+    transition: border-color var(--t-mid), box-shadow var(--t-mid);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .stack-category:hover {
+    border-color: var(--border-standard);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+  }
+
+  .category-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-5);
+    border-bottom: 1px solid var(--border-ghost);
+    background: var(--surface-2);
+  }
+
+  .category-index {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--ink-muted);
+    letter-spacing: 0.1em;
+  }
+
+  .category-name {
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 0.01em;
+  }
+
+  .category-body {
+    padding: var(--space-6);
+  }
+
+  .tech-chips-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  /* Minimalist Tech Chip */
+  .tech-chip {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: 8px var(--space-4);
+    background: rgba(17, 41, 76, 0.2);
+    border: 1px solid var(--border-ghost);
+    border-radius: var(--r-md);
+    transition: all var(--t-mid) var(--ease-out);
+  }
+
+  .tech-chip:hover {
+    background: var(--surface-2);
+    transform: translateY(-2px);
+  }
+
+  .tech-chip--pro {
+    border-color: rgba(100, 255, 218, 0.08);
+  }
+  .tech-chip--pro:hover {
+    border-color: var(--cyan);
+    box-shadow: 0 0 12px var(--cyan-glow);
+  }
+
+  .tech-chip--dev {
+    border-color: rgba(201, 169, 110, 0.08);
+  }
+  .tech-chip--dev:hover {
+    border-color: var(--gold);
+    box-shadow: 0 0 12px rgba(201, 169, 110, 0.15);
+  }
+
+  .tech-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .tech-icon {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+  }
+
+  .tech-name {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--ink-secondary);
+    font-weight: 500;
+    transition: color var(--t-fast);
+  }
+
+  .tech-chip:hover .tech-name {
+    color: var(--ink-primary);
+  }
+
+  /* Level indicator tag inside chip */
+  .tech-level {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+    padding: 1px 4px;
+    border-radius: var(--r-sm);
+    text-transform: uppercase;
+    margin-left: auto;
+  }
+
+  .tech-level--pro {
+    color: var(--cyan);
+    background: var(--cyan-dim);
+    border: 1px solid rgba(100, 255, 218, 0.15);
+  }
+
+  .tech-level--dev {
+    color: var(--gold);
+    background: var(--gold-dim);
+    border: 1px solid rgba(201, 169, 110, 0.15);
+  }
+
+  /* Legend */
+  .stack-legend {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    margin-top: var(--space-8);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--border-ghost);
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .legend-label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--ink-tertiary);
+    letter-spacing: 0.04em;
+  }
+
+  @media (max-width: 1024px) {
+    .stack-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-5);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .stack-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-5);
+    }
+  }
+</style>

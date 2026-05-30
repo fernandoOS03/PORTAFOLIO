@@ -1,0 +1,445 @@
+---
+// About.astro — Sobre mí section
+---
+
+<section class="section about" id="sobre-mi">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">01. sobre mí</span>
+    </div>
+
+    <div class="about-grid">
+      <!-- Left: Timeline -->
+      <div class="timeline">
+        <div class="timeline-line" aria-hidden="true"></div>
+
+        <div class="timeline-item" style="animation-delay: 0.1s">
+          <div class="timeline-dot" aria-hidden="true"></div>
+          <div class="timeline-content">
+            <span class="timeline-year">2025 – Presente</span>
+            <h3 class="timeline-role">Software Engineer Intern</h3>
+            <div class="timeline-company">Notaria PAINO · Remoto</div>
+            <ul class="timeline-details">
+              <li class="timeline-desc">
+                Desarrollo y mantenimiento continuo de sistemas internos enfocados en la automatización de flujos de trabajo y procesos notariales, utilizando tecnologías como Python, Node.js, Selenium y Playwright.
+              </li>
+              <li class="timeline-desc">
+                Programé y mantuve APIs internas, integrando servicios de base de datos para la gestión eficiente de documentos.
+              </li>
+              <li class="timeline-desc">
+                Reduje el ciclo de procesamiento de datos mediante scripts personalizados de scraping, mejorando la disponibilidad de información para el área legal.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Bio + principles -->
+      <div class="about-right">
+        <blockquote class="about-quote">
+          <div class="quote-glyph" aria-hidden="true">//</div>
+          <p class="quote-text">
+            Me adapto rápido a cualquier entorno laboral, apoyándome en mi flexibilidad para 
+            aprender una tecnología o las reglas de negocio de tu empresa.
+          </p>
+          <footer class="quote-footer">
+            <span class="quote-author">Fernando Olivera</span>
+            <span class="quote-role">Backend Developer</span>
+          </footer>
+        </blockquote>
+
+        <div class="about-text">
+          <p>
+            Cuento con 1+ años de experiencia en Java y Node.js,
+            especializado en sistemas distribuidos, APIs REST y automatización
+            de procesos con IA.
+          </p>
+          <p>
+            Estoy buscando incorporarme a un equipo donde pueda contribuir desde 
+            el día uno, aprender de arquitecturas en producción
+            a gran escala y crecer hacia roles de mayor responsabilidad técnica.
+          </p>
+          <!-- Cloud versatility chips -->
+          <div class="cloud-chips">
+            <span class="cloud-label">Cloud &amp; Infra</span>
+            <div class="cloud-tags">
+              <span class="cloud-tag">AWS EC2</span>
+              <span class="cloud-tag">AWS SES</span>
+              <span class="cloud-tag cloud-tag--dev">AWS S3</span>
+              <!--<span class="cloud-tag">AWS Lambda</span>-->
+              <span class="cloud-tag cloud-tag--dev">Kubernetes</span>
+              <span class="cloud-tag cloud-tag--dev">Docker</span>
+              <span class="cloud-tag cloud-tag--dev">RabbitMQ</span>
+              <!--<span class="cloud-tag cloud-tag--dev">Terraform</span>-->
+            </div>
+          </div>
+        </div>
+
+        <!-- Principles grid -->
+        <div class="principles">
+          
+          <div class="principle-card">
+            <div class="principle-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+              </svg>
+            </div>
+            <h4>Performance First</h4>
+            <p>La latencia no es un detalle — es un requisito de negocio.</p>
+          </div>
+
+          <div class="principle-card">
+            <div class="principle-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"></path>
+              </svg>
+            </div>
+            <h4>Automatización</h4>
+            <p>Si se repite más de dos veces, se automatiza.</p>
+          </div>
+
+          <div class="principle-card principle-card--cloud">
+            <div class="principle-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path>
+              </svg>
+            </div>
+            <h4>Cloud-Native</h4>
+            <p>Despliegues en AWS con Docker, lambdas y colas de mensajes.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-16);
+    align-items: start;
+  }
+
+  /* Timeline */
+  .timeline {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  @media (min-width: 901px) {
+    .timeline {
+      position: sticky;
+      top: calc(68px + var(--space-8));
+      align-self: start;
+    }
+  }
+
+  .timeline-line {
+    position: absolute;
+    left: 7px;
+    top: 12px;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg, var(--cyan), transparent);
+    opacity: 0.3;
+  }
+
+  .timeline-item {
+    display: flex;
+    gap: var(--space-5);
+    padding-bottom: var(--space-8);
+    animation: fadeUp 0.6s var(--ease-out) both;
+  }
+
+  .timeline-dot {
+    flex-shrink: 0;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: var(--canvas);
+    border: 2px solid var(--cyan);
+    margin-top: 3px;
+    position: relative;
+    z-index: 1;
+    transition:
+      background var(--t-fast),
+      box-shadow var(--t-fast);
+  }
+
+  .timeline-item:hover .timeline-dot {
+    background: var(--cyan);
+    box-shadow: 0 0 12px var(--cyan-glow);
+  }
+
+  .timeline-content {
+    padding-top: 0;
+  }
+
+  .timeline-year {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--cyan);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: var(--space-1);
+  }
+
+  .timeline-role {
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
+    font-weight: 600;
+    color: var(--ink-primary);
+    margin-bottom: 2px;
+  }
+
+  .timeline-company {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--gold);
+    margin-bottom: var(--space-2);
+  }
+
+  .timeline-details {
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: var(--space-3);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2.5);
+  }
+
+  .timeline-desc {
+    font-size: 0.875rem;
+    color: var(--ink-secondary);
+    line-height: 1.65;
+    position: relative;
+    padding-left: var(--space-4);
+  }
+
+  .timeline-desc::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--cyan);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+
+  /* Right side */
+  .about-right {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+    animation: fadeUp 0.7s var(--ease-out) 0.15s both;
+  }
+
+  .about-quote {
+    position: relative;
+    background: linear-gradient(135deg, rgba(100, 255, 218, 0.06) 0%, rgba(13, 32, 60, 0.8) 100%);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--r-xl);
+    padding: var(--space-6) var(--space-6) var(--space-5);
+    overflow: hidden;
+    box-shadow: 0 0 32px rgba(100, 255, 218, 0.04);
+  }
+
+  .about-quote::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--r-xl);
+    padding: 1px;
+    background: linear-gradient(135deg, var(--cyan), transparent 60%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .quote-glyph {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--cyan);
+    letter-spacing: 0.1em;
+    margin-bottom: var(--space-3);
+    opacity: 0.7;
+  }
+
+  .quote-text {
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
+    font-weight: 500;
+    color: var(--ink-primary);
+    line-height: 1.6;
+    margin-bottom: var(--space-4);
+  }
+
+  .quote-footer {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--border-ghost);
+  }
+
+  .quote-author {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--cyan);
+    letter-spacing: 0.05em;
+  }
+
+  .quote-role {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--ink-muted);
+    letter-spacing: 0.05em;
+  }
+
+  .quote-role::before {
+    content: '·';
+    margin-right: var(--space-3);
+  }
+
+  .about-text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .about-text p {
+    font-size: 0.9375rem;
+    color: var(--ink-secondary);
+    line-height: 1.7;
+  }
+
+  .about-text strong {
+    color: var(--cyan);
+    font-weight: 500;
+  }
+
+  /* Cloud chips */
+  .cloud-chips {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-4);
+    background: var(--surface-1);
+    border: 1px solid var(--border-ghost);
+    border-radius: var(--r-md);
+  }
+
+  .cloud-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--gold);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .cloud-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .cloud-tag {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--ink-secondary);
+    background: var(--surface-2);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--r-sm);
+    padding: 2px var(--space-3);
+    transition: color var(--t-fast), border-color var(--t-fast), background var(--t-fast);
+  }
+
+  .cloud-tag:hover {
+    color: var(--cyan);
+    border-color: var(--border-standard);
+    background: var(--cyan-dim);
+  }
+
+  .cloud-tag--dev {
+    color: var(--ink-muted);
+    border-style: dashed;
+  }
+
+  /* Principles */
+  .principles {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-3);
+  }
+
+  .principle-card {
+    background: var(--surface-1);
+    border: 1px solid var(--border-ghost);
+    border-radius: var(--r-md);
+    padding: var(--space-4);
+    transition:
+      border-color var(--t-mid),
+      transform var(--t-mid);
+  }
+
+  .principle-card:hover {
+    border-color: var(--border-subtle);
+    transform: translateY(-2px);
+  }
+
+  .principle-icon {
+    color: var(--cyan);
+    margin-bottom: var(--space-2);
+    opacity: 0.8;
+  }
+
+  .principle-card h4 {
+    font-family: var(--font-display);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--ink-primary);
+    margin-bottom: var(--space-1);
+  }
+
+  .principle-card p {
+    font-size: 0.75rem;
+    color: var(--ink-tertiary);
+    line-height: 1.55;
+  }
+
+  .principle-card--cloud {
+    border-color: var(--border-subtle);
+    background: linear-gradient(135deg, rgba(100, 255, 218, 0.04), var(--surface-1));
+  }
+
+  .principle-card--cloud .principle-icon {
+    color: var(--gold);
+  }
+
+  @media (max-width: 900px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-10);
+    }
+    .principles {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .principles {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 500px) {
+    .principles {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

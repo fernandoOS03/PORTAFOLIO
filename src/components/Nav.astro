@@ -1,0 +1,259 @@
+---
+// Nav.astro — Sticky navigation bar
+---
+<header class="nav-wrapper" id="nav">
+  <nav class="container nav-inner">
+    <!-- Logo -->
+    <a href="/" class="nav-logo" aria-label="Fernando Olivera — Inicio">
+      <span class="logo-mark">FO</span>
+      <span class="logo-slash">/</span>
+      <span class="logo-role">backend.dev</span>
+    </a>
+
+    <!-- Links -->
+    <ul class="nav-links" role="list">
+      <li><a href="#sobre-mi" class="nav-link">Sobre mí</a></li>
+      <li><a href="#proyectos" class="nav-link">Proyectos</a></li>
+      <li><a href="#stack" class="nav-link">Stack</a></li>
+      <li><a href="#contacto" class="nav-link">Contacto</a></li>
+    </ul>
+
+    <!-- CTA -->
+    <a
+      href="https://res.cloudinary.com/YOUR_CLOUD/raw/upload/f_auto,q_auto/fernando_olivera_cv.pdf"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="btn btn-gold nav-cv"
+      id="btn-download-cv"
+    >
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="7 10 12 15 17 10"/>
+        <line x1="12" y1="15" x2="12" y2="3"/>
+      </svg>
+      Descargar CV
+    </a>
+
+    <!-- Mobile menu button -->
+    <button class="nav-mobile-btn" id="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="nav-mobile-menu" id="nav-mobile-menu" aria-hidden="true">
+    <ul role="list">
+      <li><a href="#sobre-mi" class="nav-mobile-link">Sobre mí</a></li>
+      <li><a href="#proyectos" class="nav-mobile-link">Proyectos</a></li>
+      <li><a href="#stack" class="nav-mobile-link">Stack</a></li>
+      <li><a href="#contacto" class="nav-mobile-link">Contacto</a></li>
+      <li>
+        <a
+          href="https://res.cloudinary.com/YOUR_CLOUD/raw/upload/f_auto,q_auto/fernando_olivera_cv.pdf"
+          class="btn btn-gold"
+          style="width:100%; justify-content:center; margin-top: 8px;"
+        >
+          Descargar CV
+        </a>
+      </li>
+    </ul>
+  </div>
+</header>
+
+<style>
+  .nav-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    transition: background var(--t-mid) var(--ease-out),
+                border-color var(--t-mid) var(--ease-out),
+                backdrop-filter var(--t-mid) var(--ease-out);
+    border-bottom: 1px solid transparent;
+  }
+
+  .nav-wrapper.scrolled {
+    background: rgba(10, 25, 47, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom-color: var(--border-subtle);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+    height: 68px;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .logo-mark {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 800;
+    color: var(--cyan);
+    letter-spacing: -0.02em;
+  }
+
+  .logo-slash {
+    font-family: var(--font-mono);
+    color: var(--ink-tertiary);
+    font-size: 0.875rem;
+  }
+
+  .logo-role {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--ink-secondary);
+    letter-spacing: 0.04em;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    margin-left: auto;
+  }
+
+  .nav-link {
+    font-family: var(--font-mono);
+    font-size: 0.78125rem;
+    color: var(--ink-secondary);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--r-sm);
+    letter-spacing: 0.03em;
+    transition: color var(--t-fast) var(--ease-out),
+                background var(--t-fast) var(--ease-out);
+    position: relative;
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: var(--space-3);
+    right: var(--space-3);
+    height: 1px;
+    background: var(--cyan);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--t-mid) var(--ease-out);
+  }
+
+  .nav-link:hover {
+    color: var(--ink-primary);
+  }
+
+  .nav-link:hover::after {
+    transform: scaleX(1);
+  }
+
+  .nav-cv {
+    margin-left: var(--space-4);
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    padding: 8px 16px;
+  }
+
+  .nav-mobile-btn {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    margin-left: auto;
+    padding: var(--space-2);
+  }
+
+  .nav-mobile-btn span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--ink-secondary);
+    border-radius: 1px;
+    transition: transform var(--t-mid) var(--ease-out),
+                opacity var(--t-mid) var(--ease-out);
+  }
+
+  .nav-mobile-btn.open span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .nav-mobile-btn.open span:nth-child(2) {
+    opacity: 0;
+  }
+  .nav-mobile-btn.open span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  .nav-mobile-menu {
+    display: none;
+    padding: var(--space-4) var(--space-5) var(--space-6);
+    border-top: 1px solid var(--border-subtle);
+    background: rgba(10, 25, 47, 0.95);
+    backdrop-filter: blur(20px);
+  }
+
+  .nav-mobile-menu ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .nav-mobile-link {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--ink-secondary);
+    padding: var(--space-3) var(--space-2);
+    border-radius: var(--r-sm);
+    transition: color var(--t-fast), background var(--t-fast);
+  }
+
+  .nav-mobile-link:hover {
+    color: var(--ink-primary);
+    background: var(--surface-2);
+  }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .nav-cv { display: none; }
+    .nav-mobile-btn { display: flex; }
+    .nav-mobile-menu.open { display: block; }
+  }
+</style>
+
+<script>
+  const nav = document.getElementById('nav')!;
+  const toggle = document.getElementById('nav-toggle')!;
+  const mobileMenu = document.getElementById('nav-mobile-menu')!;
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 20) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  }, { passive: true });
+
+  toggle.addEventListener('click', () => {
+    const isOpen = toggle.classList.toggle('open');
+    mobileMenu.classList.toggle('open', isOpen);
+    toggle.setAttribute('aria-expanded', String(isOpen));
+    mobileMenu.setAttribute('aria-hidden', String(!isOpen));
+  });
+
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      toggle.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+    });
+  });
+</script>

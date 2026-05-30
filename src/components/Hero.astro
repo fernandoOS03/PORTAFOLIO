@@ -1,0 +1,565 @@
+---
+// Hero.astro — Terminal-inspired split hero section
+---
+
+<section class="hero" id="inicio">
+  <!-- Animated dot-grid background -->
+  <div class="hero-grid" aria-hidden="true"></div>
+
+  <div class="container hero-content">
+    <!-- Left: Terminal bio -->
+    <div class="hero-terminal">
+      <div class="terminal-chrome" aria-hidden="true">
+        <span class="dot dot-red"></span>
+        <span class="dot dot-yellow"></span>
+        <span class="dot dot-green"></span>
+        <span class="terminal-title">~/portfolio — bash</span>
+      </div>
+      <div class="terminal-body">
+        <div class="terminal-line">
+          <span class="t-prompt">fernandoolivera</span>
+          <span class="t-at">@</span>
+          <span class="t-host">dev</span>
+          <span class="t-sep">:~$</span>
+          <span class="t-cmd"> cat about.md</span>
+        </div>
+
+        <div class="terminal-output">
+          <p class="t-comment"># Fernando Olivera</p>
+          <p class="t-key">
+            role: <span class="t-val">Backend Developer</span>
+          </p>
+          <p class="t-key">
+            focus: <span class="t-val">Arquitecturas Escalables + IA</span>
+          </p>
+          <p class="t-key">
+            stack: <span class="t-val">Java · Node.js · AWS · Docker</span>
+          </p>
+          <p class="t-key">
+            status: <span class="t-val">Open to Work · Remoto</span>
+          </p>
+        </div>
+
+        <div class="terminal-line mt-2">
+          <span class="t-prompt">fernandoolivera</span>
+          <span class="t-at">@</span>
+          <span class="t-host">dev</span>
+          <span class="t-sep">:~$ </span>
+          <span id="typed-cmd" class="t-cmd"></span>
+          <span class="t-cursor" aria-hidden="true"></span>
+        </div>
+
+        <div class="terminal-bio" id="bio-output" aria-live="polite">
+          <p>
+            Desarrollador Backend con 1+ años de experiencia<br
+              class="hidden-mobile"
+            />
+            construyendo sistemas distribuidos, APIs escalables<br
+              class="hidden-mobile"
+            />
+            y pipelines de automatización en producción.
+          </p>
+          <p>
+            Busco un equipo donde aportar con <span class="t-hl">Java</span>
+            , <span class="t-hl">Node.js</span> y<br class="hidden-mobile" />
+            visión de arquitectura — idealmente en modalidad<br
+              class="hidden-mobile"
+            />
+            remota o semipresencial.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Stats card -->
+    <div class="hero-stats">
+      <div class="stats-header">
+        <span class="label">system.stats</span>
+      </div>
+
+      <div class="stat-item">
+        <span class="stat-number">1<span class="stat-plus">+</span></span>
+        <span class="stat-label">Años de experiencia</span>
+        <div class="stat-bar">
+          <div class="stat-bar-fill" style="width: 75%"></div>
+        </div>
+      </div>
+
+      <div class="stat-item">
+        <span class="stat-number">3<span class="stat-plus">k+</span></span>
+        <span class="stat-label">Registros/hora procesados</span>
+        <div class="stat-bar">
+          <div class="stat-bar-fill" style="width: 90%"></div>
+        </div>
+      </div>
+
+      <div class="stat-item">
+        <span class="stat-number">2</span>
+        <span class="stat-label">Proyectos en portafolio</span>
+        <div class="stat-bar">
+          <div class="stat-bar-fill" style="width: 60%"></div>
+        </div>
+      </div>
+
+  
+
+      <!-- Status indicator -->
+      <div class="status-row">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span class="status-text"
+          >Open to Work · Búsqueda activa de empleo</span
+        >
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA Buttons -->
+  <div class="container hero-cta">
+    <a href="#proyectos" class="btn btn-primary" id="btn-ver-proyectos">
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        aria-hidden="true"
+      >
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+      Ver mi trabajo
+    </a>
+    <a
+      href="https://res.cloudinary.com/YOUR_CLOUD/raw/upload/f_auto,q_auto/fernando_olivera_cv.pdf"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="btn btn-gold"
+      id="btn-hero-cv"
+    >
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+        <polyline points="7 10 12 15 17 10"></polyline>
+        <line x1="12" y1="15" x2="12" y2="3"></line>
+      </svg>
+      Descargar CV
+    </a>
+    <a
+      href="https://github.com/fernandoOS03"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="btn btn-ghost"
+      id="btn-github-hero"
+    >
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path
+          d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.929.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"
+        ></path>
+      </svg>
+      GitHub
+    </a>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="hero-scroll" aria-hidden="true">
+    <div class="scroll-line"></div>
+    <span class="scroll-label">scroll</span>
+  </div>
+</section>
+
+<style>
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 68px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Dot grid background */
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(
+      circle,
+      rgba(100, 255, 218, 0.12) 1px,
+      transparent 1px
+    );
+    background-size: 32px 32px;
+    mask-image: radial-gradient(
+      ellipse 80% 60% at 50% 50%,
+      black 30%,
+      transparent 100%
+    );
+    pointer-events: none;
+  }
+
+  .hero-content {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: var(--space-10);
+    align-items: stretch;
+    padding-top: var(--space-16);
+    padding-bottom: var(--space-8);
+  }
+
+  /* Terminal */
+  .hero-terminal {
+    background: var(--surface-1);
+    border: 1px solid var(--border-standard);
+    border-radius: var(--r-xl);
+    overflow: hidden;
+    box-shadow:
+      0 24px 64px rgba(0, 0, 0, 0.4),
+      0 0 0 1px var(--border-ghost);
+    animation: fadeUp 0.8s var(--ease-out) 0.1s both;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .terminal-chrome {
+    background: var(--surface-2);
+    padding: 12px var(--space-4);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  .dot-red {
+    background: #ff5f57;
+  }
+  .dot-yellow {
+    background: #febc2e;
+  }
+  .dot-green {
+    background: #28c840;
+  }
+
+  .terminal-title {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--ink-tertiary);
+    margin-left: auto;
+    letter-spacing: 0.04em;
+  }
+
+  .terminal-body {
+    padding: var(--space-5) var(--space-6);
+    min-height: 280px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .terminal-line {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+  }
+
+  .mt-2 {
+    margin-top: var(--space-4);
+  }
+
+  .t-prompt {
+    color: var(--cyan);
+  }
+  .t-at {
+    color: var(--ink-tertiary);
+  }
+  .t-host {
+    color: var(--gold);
+  }
+  .t-sep {
+    color: var(--ink-secondary);
+  }
+  .t-cmd {
+    color: var(--ink-primary);
+  }
+
+  .terminal-output {
+    margin-top: var(--space-3);
+    margin-bottom: var(--space-3);
+    padding-left: var(--space-4);
+    border-left: 2px solid var(--border-subtle);
+  }
+
+  .t-comment {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--ink-tertiary);
+    margin-bottom: var(--space-2);
+  }
+
+  .t-key {
+    font-family: var(--font-mono);
+    font-size: 0.78125rem;
+    color: var(--ink-secondary);
+    line-height: 1.7;
+  }
+
+  .t-val {
+    color: var(--ink-primary);
+  }
+
+  .terminal-bio {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--ink-secondary);
+    line-height: 1.75;
+    padding-top: var(--space-4);
+    padding-left: var(--space-4);
+    border-left: 2px solid var(--border-subtle);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    opacity: 0;
+    transition: opacity 0.5s var(--ease-out);
+  }
+
+  .terminal-bio.visible {
+    opacity: 1;
+  }
+
+  .t-hl {
+    color: var(--cyan);
+  }
+
+  .t-cursor {
+    display: inline-block;
+    width: 8px;
+    height: 14px;
+    background: var(--cyan);
+    margin-left: 2px;
+    vertical-align: text-bottom;
+    animation: blink 1s step-end infinite;
+  }
+
+  /* Stats card */
+  .hero-stats {
+    background: var(--surface-1);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--r-xl);
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    animation: fadeUp 0.8s var(--ease-out) 0.25s both;
+  }
+
+  .stats-header {
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--border-ghost);
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .stat-number {
+    font-family: var(--font-mono);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--ink-primary);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .stat-plus {
+    font-size: 1rem;
+    color: var(--cyan);
+    vertical-align: super;
+  }
+
+  .stat-label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--ink-tertiary);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .stat-bar {
+    height: 2px;
+    background: var(--border-ghost);
+    border-radius: 1px;
+    overflow: hidden;
+  }
+
+  .stat-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--cyan), rgba(100, 255, 218, 0.4));
+    border-radius: 1px;
+    transform-origin: left;
+    animation: growBar 1.2s var(--ease-out) 0.5s both;
+  }
+
+  @keyframes growBar {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  .status-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--border-ghost);
+    margin-top: auto;
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #28c840;
+    flex-shrink: 0;
+    animation: pulse-glow 2s ease-in-out infinite;
+    box-shadow: 0 0 0 0 rgba(40, 200, 64, 0.4);
+  }
+
+  @keyframes pulse-glow {
+    0% {
+      box-shadow: 0 0 0 0 rgba(40, 200, 64, 0.4);
+    }
+    70% {
+      box-shadow: 0 0 0 6px rgba(40, 200, 64, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(40, 200, 64, 0);
+    }
+  }
+
+  .status-text {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--ink-secondary);
+    letter-spacing: 0.03em;
+    line-height: 1.4;
+  }
+
+  /* CTA */
+  .hero-cta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding-bottom: var(--space-10);
+    animation: fadeUp 0.8s var(--ease-out) 0.4s both;
+    flex-wrap: wrap;
+  }
+
+  /* Scroll indicator */
+  .hero-scroll {
+    position: absolute;
+    bottom: var(--space-6);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    opacity: 0.4;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(180deg, var(--cyan), transparent);
+    animation: float 2s ease-in-out infinite;
+  }
+
+  .scroll-label {
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    color: var(--ink-tertiary);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 900px) {
+    .hero-scroll {
+      display: none;
+    }
+  }
+
+  .hidden-mobile {
+    display: none;
+  }
+
+  @media (min-width: 900px) {
+    .hidden-mobile {
+      display: inline;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .hero-content {
+      grid-template-columns: 1fr;
+    }
+    .hero-stats {
+      display: none;
+    }
+    .hero-cta {
+      justify-content: center;
+    }
+  }
+</style>
+
+<script>
+  // Typing animation
+  const typedCmd = document.getElementById("typed-cmd")!;
+  const bioOutput = document.getElementById("bio-output")!;
+
+  const command = "cat bio.txt";
+  let i = 0;
+
+  function typeChar() {
+    if (i < command.length) {
+      typedCmd.textContent += command[i];
+      i++;
+      setTimeout(typeChar, 60 + Math.random() * 40);
+    } else {
+      // Show bio after typing
+      setTimeout(() => {
+        bioOutput.classList.add("visible");
+      }, 300);
+    }
+  }
+
+  // Start typing after a short delay
+  setTimeout(typeChar, 900);
+</script>
