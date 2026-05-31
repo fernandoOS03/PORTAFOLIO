@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Background -->
+  <rect width="512" height="512" rx="128" fill="#0A192F" />
+  <!-- Subtle glowing circle -->
+  <circle cx="256" cy="256" r="230" fill="none" stroke="#64FFDA" stroke-width="4" opacity="0.15" />
+  <!-- Muted grid/tech accents -->
+  <line x1="256" y1="26" x2="256" y2="486" stroke="rgba(100, 255, 218, 0.05)" stroke-width="2" />
+  <line x1="26" y1="256" x2="486" y2="256" stroke="rgba(100, 255, 218, 0.05)" stroke-width="2" />
+  
+  <!-- Sleek branding FO/ (Mathematically Centered horizontally and vertically) -->
+  <g>
+    <!-- Slash in center background -->
+    <line x1="176" y1="390" x2="276" y2="122" stroke="rgba(136, 146, 176, 0.2)" stroke-width="28" stroke-linecap="round" />
+    
+    <!-- Stylized 'F' in Cyan -->
+    <!-- Vertical stem -->
+    <rect x="96" y="130" width="38" height="252" rx="19" fill="#64FFDA" />
+    <!-- Top bar -->
+    <rect x="96" y="130" width="140" height="38" rx="19" fill="#64FFDA" />
+    <!-- Middle bar -->
+    <rect x="96" y="237" width="95" height="38" rx="19" fill="#64FFDA" />
+
+    <!-- Stylized 'O' in Gold -->
+    <!-- Circular outline -->
+    <circle cx="316" cy="256" r="82" fill="none" stroke="#C9A96E" stroke-width="38" />
+  </g>
+</svg>

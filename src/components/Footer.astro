@@ -5,7 +5,20 @@
 <footer class="footer">
   <div class="container footer-inner">
     <div class="footer-left">
-      <span class="footer-logo">FO<span class="footer-logo-slash">/</span></span>
+      <a href="/" class="footer-logo-link" aria-label="Fernando Olivera — Inicio">
+        <svg class="footer-logo-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="26" height="26" aria-hidden="true">
+          <circle cx="256" cy="256" r="230" fill="none" stroke="#64FFDA" stroke-width="4" opacity="0.15" />
+          <line x1="256" y1="26" x2="256" y2="486" stroke="rgba(100, 255, 218, 0.05)" stroke-width="2" />
+          <line x1="26" y1="256" x2="486" y2="256" stroke="rgba(100, 255, 218, 0.05)" stroke-width="2" />
+          <g>
+            <line x1="176" y1="390" x2="276" y2="122" stroke="rgba(136, 146, 176, 0.2)" stroke-width="28" stroke-linecap="round" />
+            <rect x="96" y="130" width="38" height="252" rx="19" fill="#64FFDA" />
+            <rect x="96" y="130" width="140" height="38" rx="19" fill="#64FFDA" />
+            <rect x="96" y="237" width="95" height="38" rx="19" fill="#64FFDA" />
+            <circle cx="316" cy="256" r="82" fill="none" stroke="#C9A96E" stroke-width="38" />
+          </g>
+        </svg>
+      </a>
       <span class="footer-copy">
         © {new Date().getFullYear()} Fernando Olivera
       </span>
@@ -52,16 +65,19 @@
     gap: var(--space-3);
   }
 
-  .footer-logo {
-    font-family: var(--font-display);
-    font-size: 1rem;
-    font-weight: 800;
-    color: var(--cyan);
-    letter-spacing: -0.02em;
+  .footer-logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
   }
 
-  .footer-logo-slash {
-    color: var(--ink-muted);
+  .footer-logo-icon {
+    flex-shrink: 0;
+    transition: transform var(--t-fast) var(--ease-out);
+  }
+
+  .footer-logo-link:hover .footer-logo-icon {
+    transform: scale(1.12) rotate(-6deg);
   }
 
   .footer-copy {

@@ -5,9 +5,20 @@
   <nav class="container nav-inner">
     <!-- Logo -->
     <a href="/" class="nav-logo" aria-label="Fernando Olivera — Inicio">
-      <span class="logo-mark">FO</span>
+      <svg class="logo-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="30" height="30" aria-hidden="true">
+        <circle cx="256" cy="256" r="230" fill="none" stroke="#64FFDA" stroke-width="4" opacity="0.15" />
+        <line x1="256" y1="26" x2="256" y2="486" stroke="rgba(100, 255, 218, 0.05)" stroke-width="2" />
+        <line x1="26" y1="256" x2="486" y2="256" stroke="rgba(100, 255, 218, 0.05)" stroke-width="2" />
+        <g>
+          <line x1="176" y1="390" x2="276" y2="122" stroke="rgba(136, 146, 176, 0.2)" stroke-width="28" stroke-linecap="round" />
+          <rect x="96" y="130" width="38" height="252" rx="19" fill="#64FFDA" />
+          <rect x="96" y="130" width="140" height="38" rx="19" fill="#64FFDA" />
+          <rect x="96" y="237" width="95" height="38" rx="19" fill="#64FFDA" />
+          <circle cx="316" cy="256" r="82" fill="none" stroke="#C9A96E" stroke-width="38" />
+        </g>
+      </svg>
       <span class="logo-slash">/</span>
-      <span class="logo-role">backend.dev</span>
+      <span class="logo-role">fernandoolivera.dev</span>
     </a>
 
     <!-- Links -->
@@ -97,12 +108,13 @@
     flex-shrink: 0;
   }
 
-  .logo-mark {
-    font-family: var(--font-display);
-    font-size: 1.125rem;
-    font-weight: 800;
-    color: var(--cyan);
-    letter-spacing: -0.02em;
+  .logo-icon {
+    flex-shrink: 0;
+    transition: transform var(--t-fast) var(--ease-out);
+  }
+
+  .nav-logo:hover .logo-icon {
+    transform: scale(1.1) rotate(6deg);
   }
 
   .logo-slash {
